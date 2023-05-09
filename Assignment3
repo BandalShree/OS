@@ -1,0 +1,49 @@
+Q.1 Keep accepting an input message from the user and displaying it till the user does not type 'Bye' (not case sensitive) using a Shell script.
+while true
+do
+        read -p "Enter Message : " msg
+        if [ $msg == 'BYE' ] || [ $msg == "bye" ]; then
+                break 
+        else
+                echo "Your Message is $msg"
+        fi
+done
+
+Q.2 Write a shell script to reverse an integer (e.g. 1234 to 4321).
+read -p "Enter the number : " num
+echo -n "reverse of $num is "
+echo $num | rev 
+
+Q.3 Create a looping menu to accept either (1) Simple interest or (2) Compound interest or (3) Exit as the option from the user. If the user selects Simple interest, accept principal amount (p), time (in years) (n) and rate of interest (r). Display simple interest using the formula interest = pnr / 100. If the user selected compound interest, also accept how many times interest was applied/calculated every year (t). Display compound interest using the formula interest = p x (1 + r/n) raised to the power (n x t)                                                                                                                                                                               
+while true
+do
+PS3="Enter your choice: "
+select choice in SIMPLE_INTEREST COMPOUND_INTEREST EXIT;
+do
+break
+done
+case $choice in 
+        SIMPLE_INTEREST)
+                read -p "Enter the Principal Ammount(p): " p
+                read -p "Enter the Time(in years)(n): " n
+                read -p "Enter the Rate of Interest(r): " r
+                SI=$((p*n*r/100 ))
+                echo "Simple Interest is : $SI ";;
+        COMPOUND_INTEREST)
+                read -p "Enter the Principal Ammount(p): " p
+                read -p "Enter the Time(in years)(n): " n
+                read -p "Enter the Rate of Interest(r): " r
+                read -p "Enter how many times interest was applied(t): " t
+                base=$(echo "scale=2;1+$r/100/$n" | bc)
+                expo=$((n*t))
+                cal=$(echo "scale=2;$base^$expo" | bc)
+                echo -n "Compound Interest is :" 
+                echo "scale=5;$cal*$p" | bc;;
+        EXIT)
+                break 1;;
+        *)
+        echo "you have entered invalid option";;
+esac    
+done
+
+

@@ -1,0 +1,112 @@
+Section-1
+1. List all the files and sub directories of the directory /bin.
+cd /bin
+ls -l
+
+2. List all the files including hidden files in your current directory.
+ls -a
+
+3. List all the files starting with letter ‘r’ in your current directory.
+ls r*
+
+4. List all the files having three characters in their names, from your current directory.
+ls -d *abc*
+
+5. List all the files with extension .doc in your current directory.
+ls *.dac
+
+6. List all the files having the first letter of their name within the range ‘l’ to‘s’, from your current directory.
+ls -d [l-s]*
+
+7. Copy the contents of file text1 to another file text2.
+cp text1 text2
+
+8. Append the contents of file text2 to file text1.
+cat>>text2 text1
+
+9. Count the number of files in the current directory.
+ls | wc -l
+
+10. Display the output of command ls –l to a file and on the output screen.
+ls -l | ls-l>file
+
+11. From file text1 print all lines starting from 10th line.
+tail +10 text1
+
+Section-2
+1. Count the total number of words in file text1.
+wc -w shree
+
+2. List the contents of ls command page wise.
+man ls
+
+3. Using one single command, display the output of “who” and “pwd” commands.
+who;pwd
+
+4. Display the system date in following format:
+Today is Friday, 17 May 96
+echo "Today is $(date +"%A"), $(date +"%d") $(date +"%h") $(date +"%y") "
+
+5. Use find command to locate the following within your home directory tree:
+a) Files with extension .c or .pl
+ls *.c, *.pl
+
+b) Directories having permission 755
+find -type d -perm 755
+
+c) Files having permission 655
+find -type f -perm 655
+
+d) Files having inode number 12122
+find -type f -inum 12122
+
+e) Files which have not been accessed for more than a year and save the list in Old_File
+find -mtime +365 -print
+
+f) Files whose size is greater than 1024 bytes
+find -type f -size +1024c
+
+Section-3
+1. Using vi editor:
+a) Create a file “Data1.txt
+vi Data1.txt
+
+b) Save the file and exit from the vi editor.
+:wq
+
+c) Write some text and and save it to a file “MyData2.txt”
+vi MyData2.txt :wq
+
+d) Repeat point ( c ) but after writing some text don’t save and just exit “vi”
+:q!
+
+2. Create a file using vi editor and enter the following text in it:
+Unix Unix Unix Unix Unix
+Unix is multi user operating system, Unix is multi tasking o\perating system
+Everything on Unix is a file.
+Unix File structure is hierarchical like an upside down tree.
+Regular files cannot contain another file, or directory
+Directory File Contains directory(s) and/or file(s) within it
+Device files are used to represent physical devices.
+Symbolic link is an indirect pointer to a file
+a) Save the file without exiting vi.
+:w
+
+b) Display the line number from within vi
+set number
+
+c) Move first three lines of the file to the end of the file.
+3dd(cut 3 lines) ,p(paste after)
+
+d) Copy 5th line and paste above the first line.
+yy(copy) , P(paste before)
+
+e) Search the word Unix in forward direction
+/Unix(search),shift+*
+
+f) Search the word Unix in backward direction
+/Unix(search),shift+#
+
+g) Replace all the occurrences of the word Unix with UnixOS
+:%s/Unix/UnixOS/g
+

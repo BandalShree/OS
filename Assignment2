@@ -1,0 +1,228 @@
+1. List only the directories in your current directory
+ls -d */
+
+2. Display the name and count of the directories in the current directory.
+find -type -d
+find -type d; find -type d |wc -l
+
+3. Find out whether the users with a pattern“itp9” in their names have logged in ?
+last | grep 'itp9.*logged in'
+
+4. Find out whether a particular user “itp9” has logged in ?
+last itp9
+
+5. Assign a value “Black” to var1 and then display the following message on the
+terminal using this variable.
+Black belt is associated with karate
+var1="Black"
+echo $var1 "belt is associated with karate"
+Black belt is associated with karate
+
+6. Accept a file name and a number (x). Display x lines from the top of the file.
+Check if the file exists and is readable. The value of x should not exceed the total
+number of lines in the files. Display suitable messages in case an error is
+encountered.
+read -p "File Name : " text
+read -p "Number : " x
+if [ -r "$text" ]; then
+    lines=$(wc -l < "$text")
+    if [ "$lines" -gt "$x" ]; then
+        head -n "$x" "$text"
+    else
+        echo "Value of x exceeds the total number."
+    fi
+else
+    echo "Error: File $text does not exist or is not readable."
+fi
+
+7. Write a menu based script which displays the following options :
+1. Make a file.
+2. Display contents
+3. Copy the file
+4. Rename the file
+5. Delete the file
+6. Exit
+Enter your option:
+If the user selects option 1, accept a file name from the user. If the file exists,
+then display an error message pass the control to the menu. If the file does not
+exist, then allow the user to enter some data. Pressing ^D would save the
+contents and display the menu.
+If the user selects option 2, then accept a file name from the user. If the file
+exists, then display the contents of the file. If the file does not exist, then display
+suitable error message. After this process, display the menu to accept another
+option.
+Selecting Option 3 allows the user to accept the source file and target file. If the
+source file exists and is readable, then accept the target file name. If the source
+file does not exist, then display suitable error message. If the target file does not
+exist, then copy the contents of the source file to the target file. If the target file
+exists, then display suitable message and go back to the menu.
+Option 4 is similar to option 3 but rename the file instead of copying.
+Selecting option 5 allows the user to enter a file name. If the file exists, then
+check to see if it is writable. If so, then delete the file with confirmation from the
+user. If the file does not exist, then display suitable error message.
+while true
+do
+PS3="Enter your choice: "
+select choice in MAKE_FILE DISPLAY_CONTENTS COPY_FILE RENAME_FILE DELETE_FILE EXIT;
+do
+break
+done
+case $choice in 
+	MAKE_FILE)
+		read -p "Enter name of file: " file
+		if [ -f $file ]; then
+    			echo "File exists"
+		else
+    			cat > $file 
+		fi;;
+	DISPLAY_CONTENTS)
+		read -p "Enter name of file: " file
+                if [ ! -f $file ]; then
+                        echo "File does not exists"
+                else
+                        cat $file 
+                fi;;
+	COPY_FILE)
+		read -p "Enter name of source file: " sfile
+		read -p "Enter name of target file: " tfile
+                if [ -f $sfile ]; then
+                	if [ -f $tfile ] && [ -r $sfile]; then
+				echo "Target File alredy exists"
+			else
+				cp $sfile $tfile
+			fi
+                else
+                        echo "soruce file does not exist"
+                fi;;
+	RENAME_FILE) 
+		read -p "Enter name of old file: " sfile
+                read -p "Enter name of new file: " tfile
+                if [ -f $sfile ]; then
+                        mv $sfile $tfile
+                else
+                        echo "soruce file does not exist"
+                fi;;
+	DELETE_FILE)
+		read -p "Enter name of file: " file
+                if [ ! -f $file ]; then
+                        echo "File does not exists"
+                else
+                        rm $file
+                fi;;
+	EXIT)
+		break 1;;
+	*)
+	echo "you have entered invalid option";;
+esac	
+done
+
+8. Write a menu based shell script which will perform arithmetic operations on two
+numbers which are inputted by user. Menu should display following operations
+Menu
+--------------
+1: Addition
+2: Substraction
+3: Multiplication
+4: Division
+5: Exit
+while true
+do
+PS3="Enter your choice: "
+select choice in ADD SUB MUL DIV EXIT;
+do
+break
+done
+case $choice in 
+	ADD)
+		read -p "Enter the firt number: " num1
+		read -p "Enter the secound number: " num2
+		add=$(( num1 + num2 ))
+		echo "your result for the operation is : $add ";;
+	SUB)
+		read -p "Enter the firt number: " num1
+		read -p "Enter the secound number: " num2
+		sub=$(( num1 - num2 ))
+		echo "your result for the operation is : $sub ";;
+	MUL)
+		read -p "Enter the firt number: " num1
+		read -p "Enter the secound number: " num2
+		mul=$(( num1 * num2 ))
+		echo  "your result for the operation is : $mul ";;
+	DIV) 
+		read -p "Enter the firt number: " num1
+		read -p "Enter the secound number: " num2
+		div=$(( num1 / num2 ))
+		echo "your result for the operation is : $div ";;
+	EXIT)
+		break 1;;
+	*)
+	echo "you have entered invalid option";;
+esac	
+done
+
+
+9. Write a shell script that will remove a file taken as command line argument after
+taking the proper backup of file in /home/user1/backup directory
+read -p "Enter name of file: " file
+if [ ! -f $file ]; then
+        echo "File does not exists"
+else
+        cp $file "../../backup/"$file
+        rm $file
+fi;
+
+10. Write a shell script that will accept a string from the user. Copy all contents of the
+file to other file without that string. Also display number of characters, lines, and
+words.
+sed 's/sring//g' file1 > file2 | wc file1
+
+11. Write a shell script which will generate the O/P as follows
+	     *
+* * *  * * * * * *
+	     *
+echo "              *"
+echo "* * *   * * * * * *"
+echo "              *"
+
+
+12. Write a shell script which will calculate the factorial of an integer entered from the
+keyboard.
+read -p "Enter the Number : " num
+fact=1
+while [ $num -gt 1 ]
+do
+        fact=$((fact*num))
+        num=$((num-1))
+done
+echo "Factorial of $num is : $fact"
+
+
+13. Write a shell script which will generate the O/P as follows
+*
+**
+***
+****
+read -p "Enter the Number : " num
+for((i=0;i<num;i++))
+do
+        for((j=0;j<=i;j++))
+        do
+                echo -n "* "
+        done
+        echo ""
+done
+
+14. Write a script which when executed checks out whether it is a working day or not?
+(Note: Working day Mon-Fri)
+options=("Mon" "Tue" "Wen" "Thu" "Fri")
+day=$(date +"%a")
+
+for opt in "${options[@]}"
+do
+        if [ $day == $opt ]; then
+                echo "Today is working day" $day
+        fi
+done
+
+
+
